@@ -1,4 +1,4 @@
-package com.makza.authorization.ui.theme
+package com.makza.authorization.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
