@@ -13,8 +13,22 @@ class AuthorizationViewModel: ViewModel() {
         _loginSF.value = inputLogin
     }
 
+    private val _passwordSF = MutableStateFlow("")
+    val passwordSF = _passwordSF.asStateFlow()
+
+    fun setPassword(inputPass: String){
+        _passwordSF.value = inputPass
+    }
+
+
+
+
+
+
+
+
     fun testPrint(){
-        println("~~ ${_loginSF.value}")
+        println("~~ login: ${_loginSF.value}  password: ${_passwordSF.value}")
     }
 
 
