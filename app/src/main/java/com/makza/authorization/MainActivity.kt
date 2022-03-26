@@ -1,39 +1,43 @@
 package com.makza.authorization
 
+import android.app.Application
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
+import com.makza.authorization.model.database.APP
 import com.makza.authorization.theme.AuthorizationTheme
 import com.makza.authorization.view.AuthorizationView
 import com.makza.authorization.viewmodel.AuthorizationViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 
 class MainActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModelAuth = AuthorizationViewModel()
-
+        val authorizationViewModel = ViewModelProvider(this).get(AuthorizationViewModel::class.java)
+        authorizationViewModel.initDataBase()
 
         setContent {
             AuthorizationTheme {
-                // A surface container using the 'background' color from the theme
+
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(bottom = 200.dp)
                 ) {
-                    AuthorizationView(AuthorizationViewModel())
+                    AuthorizationView(authorizationViewModel)
                 }
             }
         }
+
+
     }
+
 }
 
 
