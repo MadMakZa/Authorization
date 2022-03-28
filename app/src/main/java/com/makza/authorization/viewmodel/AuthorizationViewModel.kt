@@ -3,13 +3,17 @@ package com.makza.authorization.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.makza.authorization.MainActivity
 import com.makza.authorization.model.database.REPOSITORY
 import com.makza.authorization.model.database.UserDataBase
 import com.makza.authorization.model.database.UserModel
 import com.makza.authorization.model.database.UserRealization
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class AuthorizationViewModel(application: Application): AndroidViewModel(application) {
 
@@ -20,9 +24,12 @@ class AuthorizationViewModel(application: Application): AndroidViewModel(applica
         REPOSITORY = UserRealization(userDao = daoUser)
     }
 
-//    fun getAllUsers(): MutableStateFlow<List<UserModel>>{
-//        return REPOSITORY.allUserData
-//    }
+    suspend fun getAllUsers(): Flow<List<UserModel>> {
+        println("~~ ${REPOSITORY.getAllUsers(userDataBase = UserDataBase.getInstance(context)
+            .getUserDao()
+            .insert(userModel = UserModel(userId = 0, userLogin = "lol", userPassword = "pass")))}")
+        return REPOSITORY.getAllUsers(userDataBase = UserDataBase.getInstance(context))
+    }
 
     private val _loginSF = MutableStateFlow("")
     val loginSF = _loginSF.asStateFlow()
@@ -38,9 +45,13 @@ class AuthorizationViewModel(application: Application): AndroidViewModel(applica
         _passwordSF.value = inputPass
     }
 
+    fun login(login: String, pass: String) = viewModelScope.launch {
+        //тут будет проверка верификации, сохранение пользователя, вход
+        delay(3000L)
+    }
+
     fun testPrint(){
         println("~~ login: ${_loginSF.value}  password: ${_passwordSF.value}")
     }
-
 
 }

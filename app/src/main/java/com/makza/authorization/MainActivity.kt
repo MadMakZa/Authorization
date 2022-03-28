@@ -16,15 +16,14 @@ import com.makza.authorization.viewmodel.AuthorizationViewModel
 
 class MainActivity : ComponentActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val authorizationViewModel = ViewModelProvider(this).get(AuthorizationViewModel::class.java)
         authorizationViewModel.initDataBase()
 
         setContent {
             AuthorizationTheme {
-
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -34,10 +33,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
-
     }
-
 }
 
 

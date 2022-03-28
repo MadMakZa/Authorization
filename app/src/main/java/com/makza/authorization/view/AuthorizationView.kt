@@ -14,8 +14,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
 import com.makza.authorization.R
 import com.makza.authorization.viewmodel.AuthorizationViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun AuthorizationView(viewModel: AuthorizationViewModel){
@@ -95,6 +97,9 @@ fun AuthorizationView(viewModel: AuthorizationViewModel){
                     viewModel.setPassword(password)
                     viewModel.testPrint()
                     Toast.makeText(context, "Logging", Toast.LENGTH_LONG).show()
+                    viewModel.viewModelScope.launch {
+                        viewModel.getAllUsers()
+                    }
                 }else{
                     Toast.makeText(context, "Error: invalid e-mail or password", Toast.LENGTH_LONG).show()
                 }
